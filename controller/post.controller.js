@@ -6,6 +6,17 @@ module.exports.getPosts = async (req,res)=>{
     res.status(200).json(posts)
 }
 
+//function pour avoir une seule question
+module.exports.getPost = async (req,res)=>{
+    const post = await postModel.findById(req.params.id)
+
+    if(!post){
+        res.status(400).json({message: "Question not found"})
+    }
+
+    res.status(200).json(post)
+}
+
 //function pour créer des post (questions)
 module.exports.CreatePost = async(req,res)=>{
     if(!req.body.question){
@@ -36,14 +47,15 @@ module.exports.updatePost = async (req,res)=>{
 }
 
 //effacer une question
+const ObjectID = require('mongoose').Types.ObjectId;
 
-module.exports.deletePost = async (req,res)=>{
-    const post = await postModel.findById(req.params.id)
 
-    if(!post){
-        res.status(400).json({message: "Question not found"})
+module.exports.deletePost = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id)) {
+        return res.status(400).send("ID unknow :" + req.params.id)
     }
-    await post.remove();
+    await postModel.findByIdAndRemove(req.params.id);
 
-    res.status(200).json("Question supprimer avec succès")
-}
+    return res.status(200).json({ message: 'Post deleted successfully' });
+  
+};
