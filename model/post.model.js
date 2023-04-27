@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const postSchema = mongoose.Schema(
     {
+        type:{
+            type: String,
+            required:true
+        },
         question :{
             type : String,
             required: true
