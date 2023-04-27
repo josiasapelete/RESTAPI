@@ -50,6 +50,7 @@ module.exports.CreatePost = async (req, res) => {
     }
 
     const post = await postModel.create({
+        type: req.body.type,
         question: req.body.question,
         optionA: req.body.optionA,
         optionB: req.body.optionB,
