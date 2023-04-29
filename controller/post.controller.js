@@ -55,7 +55,7 @@ module.exports.CreatePost = async (req, res) => {
         optionA: req.body.optionA,
         optionB: req.body.optionB,
         answer: req.body.answer,
-        options: [req.body.optionA, req.body.optionB, req.body.answer],
+        options: [req.body.optionA, req.body.optionB, req.body.answer]
     });
     res.status(200).json(post)
 }
@@ -71,7 +71,13 @@ module.exports.updatePost = async (req, res) => {
 
     const postupdate = await postModel.findByIdAndUpdate(
         post,
-        { $set: req.body },
+        {  type: req.body.type,
+            question: req.body.question,
+            optionA: req.body.optionA,
+            optionB: req.body.optionB,
+            answer: req.body.answer,
+            options: [req.body.optionA, req.body.optionB, req.body.answer],
+        },
         { new: true }
     );
 
